@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+
+    <string name="accessibility_description">我是无障碍的描述</string>
 </resources>
