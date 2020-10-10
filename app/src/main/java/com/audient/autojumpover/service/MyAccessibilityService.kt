@@ -32,14 +32,24 @@ class MyAccessibilityService : AccessibilityService() {
 //                            LogUtils.d(TAG, "没有找到对应的控件[$app][${event.className}]")
                                 return
                             }
-                        jump(node)
+                        jump(node, app)
+                    }
+                    "com.hskj.palmmetro" -> {
+                        val app = "玩转地铁"
+                        val node =
+                            rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.hskj.palmmetro:id/tt_splash_skip_btn")
+                                ?.getOrNull(0) ?: run {
+//                            LogUtils.d(TAG, "没有找到对应的控件[$app][${event.className}]")
+                                return
+                            }
+                        jump(node, app)
                     }
                 }
             }
         }
     }
 
-    private fun jump(node: AccessibilityNodeInfo) {
+    private fun jump(node: AccessibilityNodeInfo, app: String) {
         var success = node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
 
         // 如果失败，尝试点击父控件
@@ -47,8 +57,8 @@ class MyAccessibilityService : AccessibilityService() {
             success = node.parent?.performAction(AccessibilityNodeInfo.ACTION_CLICK) ?: false
         }
 
-        ToastUtils.show("自动跳过[$success]")
-        Log.i(TAG, "自动跳过[$success]")
+        ToastUtils.show("$app:自动跳过[$success]")
+        Log.i(TAG, "$app:自动跳过[$success]")
     }
 
     private fun AccessibilityNodeInfo.traversal() {
