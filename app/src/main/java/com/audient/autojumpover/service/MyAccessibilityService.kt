@@ -44,6 +44,14 @@ class MyAccessibilityService : AccessibilityService() {
                             }
                         jump(node, app)
                     }
+                    else -> {
+                        val app = "未知应用"
+                        val node = rootInActiveWindow?.findAccessibilityNodeInfosByText("跳过")
+                            ?.getOrNull(0) ?: run {
+                            return
+                        }
+                        jump(node, app)
+                    }
                 }
             }
         }
