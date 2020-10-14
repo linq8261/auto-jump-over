@@ -20,35 +20,23 @@ class MyAccessibilityService : AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        when (event?.eventType) {
-            AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-//                Log.i(TAG, "TYPE_WINDOW_CONTENT_CHANGED -> ${event.packageName}/${event.className}")
 
-                // TODO: 2020/10/10 需不需要排除应用的功能：列出所有应用，让用户选择
-                // 排除的应用
+        // TODO: 2020/10/10 需不需要排除应用的功能：列出所有应用，让用户选择
+        // 排除的应用
 //                val excludePackages = arrayOf("com.audient.autojumpover")
 //                if (excludePackages.contains(event.packageName)) return
 
+        when (event?.eventType) {
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
+                Log.i(TAG, "TYPE_WINDOW_STATE_CHANGED -> ${event.packageName}/${event.className}")
                 when (event.packageName) {
                     "com.ximalaya.ting.android" -> {
-                        val app = "喜马拉雅"
-                        val node =
-                            rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.ximalaya.ting.android:id/host_count_down_click_lay")
-                                ?.getOrNull(0) ?: run {
-//                            LogUtils.d(TAG, "没有找到对应的控件[$app][${event.className}]")
-                                return
-                            }
-                        jump(node, app, event.packageName.toString())
-                    }
-                    "com.hskj.palmmetro" -> {
-                        val app = "玩转地铁"
-                        val node =
-                            rootInActiveWindow?.findAccessibilityNodeInfosByViewId("com.hskj.palmmetro:id/tt_splash_skip_btn")
-                                ?.getOrNull(0) ?: run {
-//                            LogUtils.d(TAG, "没有找到对应的控件[$app][${event.className}]")
-                                return
-                            }
-                        jump(node, app, event.packageName.toString())
+                        findNodeByViewIdAndJump(
+                            appName = "喜马拉雅",
+                            viewId = "com.ximalaya.ting.android:id/host_count_down_click_lay",
+                            packageName = event.packageName.toString(),
+                            className = event.className.toString()
+                        )
                     }
                     // TODO: 2020/10/10 不要这个了，各种误触发
 //                    else -> {
@@ -61,7 +49,36 @@ class MyAccessibilityService : AccessibilityService() {
 //                    }
                 }
             }
+            // 一般来说用TYPE_WINDOW_STATE_CHANGED就能处理了，但是有些处理不了，需要用TYPE_WINDOW_CONTENT_CHANGED
+            // TYPE_WINDOW_CONTENT_CHANGED是界面上每个控件变化都会回调，所以会比较频繁
+            AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
+//                Log.i(TAG, "TYPE_WINDOW_CONTENT_CHANGED -> ${event.packageName}/${event.className}")
+                when (event.packageName) {
+                    "com.hskj.palmmetro" -> {
+                        findNodeByViewIdAndJump(
+                            appName = "玩转地铁",
+                            viewId = "com.hskj.palmmetro:id/tt_splash_skip_btn",
+                            packageName = event.packageName.toString(),
+                            className = event.className.toString()
+                        )
+                    }
+                }
+            }
         }
+    }
+
+    private fun findNodeByViewIdAndJump(
+        appName: String,
+        viewId: String,
+        packageName: String,
+        className: String
+    ) {
+        val node = rootInActiveWindow?.findAccessibilityNodeInfosByViewId(viewId)
+            ?.getOrNull(0) ?: run {
+//            Log.i(TAG, "没有找到对应的控件[$appName][${className}]")
+            return
+        }
+        jump(node, appName, packageName.toString())
     }
 
     private fun jump(node: AccessibilityNodeInfo, app: String, packageName: String) {
