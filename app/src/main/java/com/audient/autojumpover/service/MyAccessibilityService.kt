@@ -62,6 +62,14 @@ class MyAccessibilityService : AccessibilityService() {
                             className = event.className.toString()
                         )
                     }
+                    "cmccwm.mobilemusic" -> {
+                        findNodeByViewIdAndJump(
+                            appName = "咪咕音乐",
+                            viewId = "cmccwm.mobilemusic:id/bt_skip_ad",
+                            packageName = event.packageName.toString(),
+                            className = event.className.toString()
+                        )
+                    }
                 }
             }
         }
