@@ -55,6 +55,11 @@ object JumpApps {
                 "com.ss.android.article.news:id/dpo"
             ),
             JumpApp(
+                "动卡空间",
+                "com.citiccard.mobilebank",
+                "com.citiccard.mobilebank:id/btn_skip"
+            ),
+            JumpApp(
                 "美团外卖",
                 "com.sankuai.meituan.takeoutnew",
                 "com.sankuai.meituan.takeoutnew:id/ll_skip"
