@@ -15,7 +15,6 @@ object JumpApps {
         windowStateChangedAppList.associateBy { jumpApp: JumpApp -> jumpApp.packageName }
     }
 
-    // 先加到windowStateChangedAppList，如果不起作用，再加到windowContentChangedAppList
     private val windowStateChangedAppList: ArrayList<JumpApp> by lazy {
         arrayListOf(
             JumpApp(
@@ -42,6 +41,11 @@ object JumpApps {
                 "咪咕音乐",
                 "cmccwm.mobilemusic",
                 "cmccwm.mobilemusic:id/bt_skip_ad"
+            ),
+            JumpApp(
+                "今日头条",
+                "com.ss.android.article.news",
+                "com.ss.android.article.news:id/dpo"
             ),
             JumpApp(
                 "美团外卖",
