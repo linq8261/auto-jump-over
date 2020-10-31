@@ -65,6 +65,11 @@ object JumpApps {
                 "com.bankcomm.maidanba:id/ll_ad_skip"
             ),
             JumpApp(
+                "掌上生活",
+                "com.cmbchina.ccd.pluto.cmbActivity",
+                "com.cmbchina.ccd.pluto.cmbActivity:id/img_cancel"
+            ),
+            JumpApp(
                 "美团外卖",
                 "com.sankuai.meituan.takeoutnew",
                 "com.sankuai.meituan.takeoutnew:id/ll_skip"
