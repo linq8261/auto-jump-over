@@ -15,5 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val text = JumpApps.getJumpAppList().joinToString("\n") { it.name }
+        tv_jump_app_list.text = text
     }
 }

@@ -6,5 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <TextView
+        android:id="@+id/tv_jump_app_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="xxx\nyyy" />
 </LinearLayout>

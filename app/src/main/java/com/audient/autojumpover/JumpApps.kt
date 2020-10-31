@@ -15,6 +15,13 @@ object JumpApps {
         windowStateChangedAppList.associateBy { jumpApp: JumpApp -> jumpApp.packageName }
     }
 
+    fun getJumpAppList(): ArrayList<JumpApp> {
+        return ArrayList<JumpApp>().apply {
+            addAll(windowStateChangedAppList)
+            addAll(windowContentChangedAppList)
+        }
+    }
+
     private val windowStateChangedAppList: ArrayList<JumpApp> by lazy {
         arrayListOf(
             JumpApp(
