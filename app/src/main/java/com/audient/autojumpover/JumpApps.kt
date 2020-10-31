@@ -60,6 +60,11 @@ object JumpApps {
                 "com.citiccard.mobilebank:id/btn_skip"
             ),
             JumpApp(
+                "买单吧",
+                "com.bankcomm.maidanba",
+                "com.bankcomm.maidanba:id/ll_ad_skip"
+            ),
+            JumpApp(
                 "美团外卖",
                 "com.sankuai.meituan.takeoutnew",
                 "com.sankuai.meituan.takeoutnew:id/ll_skip"
