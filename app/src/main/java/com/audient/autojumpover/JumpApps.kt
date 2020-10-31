@@ -70,6 +70,11 @@ object JumpApps {
                 "com.cmbchina.ccd.pluto.cmbActivity:id/img_cancel"
             ),
             JumpApp(
+                "京东金融",
+                "com.jd.jrapp",
+                "com.jd.jrapp:id/btn_jump"
+            ),
+            JumpApp(
                 "美团外卖",
                 "com.sankuai.meituan.takeoutnew",
                 "com.sankuai.meituan.takeoutnew:id/ll_skip"
