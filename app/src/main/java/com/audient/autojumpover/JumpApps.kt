@@ -75,6 +75,11 @@ object JumpApps {
                 "com.jd.jrapp:id/btn_jump"
             ),
             JumpApp(
+                "百度手机助手",
+                "com.baidu.appsearch",
+                "com.baidu.appsearch:id/launcher_skip_layout"
+            ),
+            JumpApp(
                 "美团外卖",
                 "com.sankuai.meituan.takeoutnew",
                 "com.sankuai.meituan.takeoutnew:id/ll_skip"
