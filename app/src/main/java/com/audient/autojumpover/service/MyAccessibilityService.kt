@@ -29,53 +29,31 @@ class MyAccessibilityService : AccessibilityService() {
         when (event?.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
                 Log.i(TAG, "TYPE_WINDOW_STATE_CHANGED -> ${event.packageName}/${event.className}")
-                JumpApps.windowStateChangedAppMap[event.packageName]?.let {
-                    findNodeByViewIdAndJump(
-                        appName = it.name,
-                        viewId = it.viewId,
-                        packageName = event.packageName.toString(),
-                        className = event.className.toString()
-                    )
-                } ?: run {
-                    // TODO: 2020/10/10 不要这个了，各种误触发
-//                        val app = "未知应用"
-//                        val node = rootInActiveWindow?.findAccessibilityNodeInfosByText("跳过")
-//                            ?.getOrNull(0) ?: run {
-//                            return
-//                        }
-//                        jump(node, app, event.packageName.toString())
+
+                val key = "${event.packageName}/${event.className}"
+                JumpApps.jumpByTextAppMap[key]?.let {
+                    val node = rootInActiveWindow?.findAccessibilityNodeInfosByText(it.viewText)
+                        ?.getOrNull(0) ?: run {
+                        Log.i(TAG, "没有找到对应的控件[${it.packageName}][${it.className}]")
+                        return
+                    }
+                    jump(node, it.name, it.packageName)
                 }
             }
-            // 一般来说用TYPE_WINDOW_STATE_CHANGED就能处理了，但是有些处理不了，需要用TYPE_WINDOW_CONTENT_CHANGED
-            // TYPE_WINDOW_CONTENT_CHANGED是界面上每个控件变化都会回调，所以会比较频繁
+
             AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> {
-//                Log.i(TAG, "TYPE_WINDOW_CONTENT_CHANGED -> ${event.packageName}/${event.className}")
-                JumpApps.windowContentChangedAppMap[event.packageName]?.let {
-                    findNodeByViewIdAndJump(
-                        appName = it.name,
-                        viewId = it.viewId,
-                        packageName = event.packageName.toString(),
-                        className = event.className.toString()
-                    )
+                JumpApps.jumpByViewIdAppMap[event.packageName]?.let {
+                    val node = rootInActiveWindow?.findAccessibilityNodeInfosByViewId(it.viewId)
+                        ?.getOrNull(0) ?: run {
+                        return
+                    }
+                    jump(node, it.name, it.packageName)
                 }
             }
+
             else -> {
             }
         }
-    }
-
-    private fun findNodeByViewIdAndJump(
-        appName: String,
-        viewId: String,
-        packageName: String,
-        className: String
-    ) {
-        val node = rootInActiveWindow?.findAccessibilityNodeInfosByViewId(viewId)
-            ?.getOrNull(0) ?: run {
-//            Log.i(TAG, "没有找到对应的控件[$appName][${className}]")
-            return
-        }
-        jump(node, appName, packageName.toString())
     }
 
     private fun jump(node: AccessibilityNodeInfo, app: String, packageName: String) {

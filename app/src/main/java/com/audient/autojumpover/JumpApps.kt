@@ -3,86 +3,92 @@ package com.audient.autojumpover
 data class JumpApp(
     val name: String,
     val packageName: String,
-    val viewId: String
+    // 跳过按钮的viewId
+    val viewId: String = "",
+    // 跳过按钮的文本
+    val viewText: String = "",
+    // 跳过按钮所在的Activity的类名
+    val className: String = ""
 )
 
 object JumpApps {
-    val windowContentChangedAppMap: Map<String, JumpApp> by lazy {
-        windowContentChangedAppList.associateBy { jumpApp: JumpApp -> jumpApp.packageName }
+    val jumpByViewIdAppMap: Map<String, JumpApp> by lazy {
+        jumpByViewIdAppList.associateBy { jumpApp: JumpApp -> jumpApp.packageName }
     }
 
-    val windowStateChangedAppMap: Map<String, JumpApp> by lazy {
-        windowStateChangedAppList.associateBy { jumpApp: JumpApp -> jumpApp.packageName }
+    val jumpByTextAppMap: Map<String, JumpApp> by lazy {
+        jumpByTextAppList.associateBy { jumpApp: JumpApp -> "${jumpApp.packageName}/${jumpApp.className}" }
     }
 
     fun getJumpAppList(): ArrayList<JumpApp> {
         return ArrayList<JumpApp>().apply {
-            addAll(windowStateChangedAppList)
-            addAll(windowContentChangedAppList)
+            addAll(jumpByTextAppList)
+            addAll(jumpByViewIdAppList)
         }
     }
 
-    private val windowStateChangedAppList: ArrayList<JumpApp> by lazy {
+    private val jumpByTextAppList: ArrayList<JumpApp> by lazy {
         arrayListOf(
             JumpApp(
-                "喜马拉雅",
-                "com.ximalaya.ting.android",
-                "com.ximalaya.ting.android:id/host_count_down_click_lay"
-//            ),
-//            JumpApp(
-//                "美团外卖",
-//                "com.sankuai.meituan.takeoutnew",
-//                "com.sankuai.meituan.takeoutnew:id/ll_skip"
+                name = "发现精彩",
+                packageName = "com.cs_credit_bank",
+                viewText = "跳过",
+                className = "com.mapass.example.activity.MainActivity_"
             )
         )
     }
 
-    private val windowContentChangedAppList: ArrayList<JumpApp> by lazy {
+    private val jumpByViewIdAppList: ArrayList<JumpApp> by lazy {
         arrayListOf(
             JumpApp(
-                "玩转地铁",
-                "com.hskj.palmmetro",
-                "com.hskj.palmmetro:id/tt_splash_skip_btn"
+                name = "喜马拉雅",
+                packageName = "com.ximalaya.ting.android",
+                viewId = "com.ximalaya.ting.android:id/host_count_down_click_lay"
             ),
             JumpApp(
-                "咪咕音乐",
-                "cmccwm.mobilemusic",
-                "cmccwm.mobilemusic:id/bt_skip_ad"
+                name = "玩转地铁",
+                packageName = "com.hskj.palmmetro",
+                viewId = "com.hskj.palmmetro:id/tt_splash_skip_btn"
             ),
             JumpApp(
-                "今日头条",
-                "com.ss.android.article.news",
-                "com.ss.android.article.news:id/dpo"
+                name = "咪咕音乐",
+                packageName = "cmccwm.mobilemusic",
+                viewId = "cmccwm.mobilemusic:id/bt_skip_ad"
             ),
             JumpApp(
-                "动卡空间",
-                "com.citiccard.mobilebank",
-                "com.citiccard.mobilebank:id/btn_skip"
+                name = "今日头条",
+                packageName = "com.ss.android.article.news",
+                viewId = "com.ss.android.article.news:id/dpo"
             ),
             JumpApp(
-                "买单吧",
-                "com.bankcomm.maidanba",
-                "com.bankcomm.maidanba:id/ll_ad_skip"
+                name = "动卡空间",
+                packageName = "com.citiccard.mobilebank",
+                viewId = "com.citiccard.mobilebank:id/btn_skip"
             ),
             JumpApp(
-                "掌上生活",
-                "com.cmbchina.ccd.pluto.cmbActivity",
-                "com.cmbchina.ccd.pluto.cmbActivity:id/img_cancel"
+                name = "买单吧",
+                packageName = "com.bankcomm.maidanba",
+                viewId = "com.bankcomm.maidanba:id/ll_ad_skip"
             ),
             JumpApp(
-                "京东金融",
-                "com.jd.jrapp",
-                "com.jd.jrapp:id/btn_jump"
+                name = "掌上生活",
+                packageName = "com.cmbchina.ccd.pluto.cmbActivity",
+                viewId = "com.cmbchina.ccd.pluto.cmbActivity:id/img_cancel"
             ),
             JumpApp(
-                "百度手机助手",
-                "com.baidu.appsearch",
-                "com.baidu.appsearch:id/launcher_skip_layout"
+                name = "京东金融",
+                packageName = "com.jd.jrapp",
+                viewId = "com.jd.jrapp:id/btn_jump"
             ),
             JumpApp(
-                "美团外卖",
-                "com.sankuai.meituan.takeoutnew",
-                "com.sankuai.meituan.takeoutnew:id/ll_skip"
+                name = "百度手机助手",
+                packageName = "com.baidu.appsearch",
+                viewId = "com.baidu.appsearch:id/launcher_skip_layout"
+            ),
+            JumpApp(
+                name = "美团外卖",
+                packageName = "com.sankuai.meituan.takeoutnew",
+                viewId = "com.sankuai.meituan.takeoutnew:id/ll_skip"
             )
         )
     }
