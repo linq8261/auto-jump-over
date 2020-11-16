@@ -1,5 +1,11 @@
 package com.audient.autojumpover
 
+// 当没有匹配到已经适配的app时，尝试寻找关键字
+// 关键字要尽量避免误判，比如有些正常页面含有跳过二字的按钮
+val keywords by lazy {
+    arrayOf("跳过广告", "跳过 3", "跳过 2", "3 跳过", "2 跳过", "Skip 3", "Skip 2")
+}
+
 data class JumpApp(
     val name: String,
     val packageName: String,

@@ -16,7 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        tv_jump_app_list.text = "匹配的应用列表：\n"
         val text = JumpApps.getJumpAppList().joinToString("\n") { it.name }
-        tv_jump_app_list.text = text
+        tv_jump_app_list.append(text)
+        tv_jump_app_list.append("\n\n匹配的关键字列表：\n")
+        tv_jump_app_list.append(keywords.joinToString("\n"))
     }
 }

@@ -8,9 +8,11 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.audient.autojumpover.JumpApps
+import com.audient.autojumpover.keywords
 import com.audient.autojumpover.utils.ToastUtils
 
 private const val TAG = "MyAccessibilityService"
+
 
 class MyAccessibilityService : AccessibilityService() {
 
@@ -48,6 +50,13 @@ class MyAccessibilityService : AccessibilityService() {
                         return
                     }
                     jump(node, it.name, it.packageName)
+                } ?: run {
+                    // 没找到已经适配的，尝试寻找关键字
+                    keywords.forEach { keyword ->
+                        val node = rootInActiveWindow?.findAccessibilityNodeInfosByText(keyword)
+                            ?.getOrNull(0) ?: return@run
+                        jump(node, "匹配【$keyword】", event.packageName.toString())
+                    }
                 }
             }
 
