@@ -1,4 +1,4 @@
-# 此项目不再维护，已迁移到码云 https://gitee.com/qiantu/auto-jump-over
+# 此项目不再维护，请看：https://github.com/linq8261/AndroidAuto
 
 
 
